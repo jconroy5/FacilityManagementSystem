@@ -20,28 +20,58 @@ public class UsageDAO {
     public UsageDAO() {}
 
     /**
-     * Generates a list of inspections at a given Facility
-     * @param facility the facility that will be searched for inspections
-     * @return returns listOfInspections
+     * Assigns Facility to use by adding it to the use table
+     * @param facilityUse instance of FacilityUse to be assigned, indicating room number and start and end dates
      */
-    public List<FacilityInspection> listInspections(Facility facility) {
+    public void assignFacilityToUse(FacilityUse facilityUse) {
 
-        List<FacilityInspection> listOfInspections = new ArrayList<FacilityInspection>();
+        Connection con = DBHelper.getConnection();
+        PreparedStatement usePst = null;
 
         try {
-            Statement st = DBHelper.getConnection().createStatement();
-            String listInspectionsQuery = "SELECT * FROM inspection WHERE "
-                    + "facility_id = '" + facility.getFacilityID() + "'";
+            //Insert the facility ID, room number, and start/end dates into use table
+            String useStm = "INSERT INTO use (facility_id, room_number, start_date, "
+                    + "end_date) VALUES (?, ?, ?, ?)";
+            usePst = con.prepareStatement(useStm);
+            usePst.setInt(1, facilityUse.getFacilityID());
+            usePst.setInt(2, facilityUse.getRoomNumber());
+            usePst.setDate(3, Date.valueOf(facilityUse.getStartDate()));
+            usePst.setDate(4, Date.valueOf(facilityUse.getEndDate()));
+            usePst.executeUpdate();
+            System.out.println("UseDAO: ********** Query " + usePst + "\n");
 
-            ResultSet useRS = st.executeQuery(listInspectionsQuery);
-            System.out.println("UseDAO: ********** Query " + listInspectionsQuery + "\n");
+            //close to manage resources
+            usePst.close();
+            con.close();
+        }
+        catch (SQLException se) {
+            System.err.println("UseDAO: Threw a SQLException assigning a facility "
+                    + "to use in the use table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Gets the start date of a given Facility
+     * @param facility the Facility whose start date will be retrieved
+     * @return Returns the start date of the selected Facility
+     */
+    public LocalDate getFacilityStartDate(Facility facility) {
+
+        LocalDate facilityStartDate = null;
+        try {
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String getFacilityStartDateQuery = "SELECT start_date FROM use WHERE facility_id = '" +
+                    facility.getFacilityID() + "' ORDER BY start_date LIMIT 1";
+
+            ResultSet useRS = st.executeQuery(getFacilityStartDateQuery);
+            System.out.println("UseDAO: ********** Query " + getFacilityStartDateQuery + "\n");
 
             while ( useRS.next() ) {
-                FacilityInspection inspec = new FacilityInspection();
-                inspec.setInspection_type(useRS.getString("inspection_type"));
-                inspec.setInspection_detail(useRS.getString("inspection_detail"));
-                inspec.setFacility_ID(facility.getFacilityID());
-                listOfInspections.add(inspec);
+                facilityStartDate = useRS.getDate("start_date").toLocalDate();
             }
 
             //close to manage resources
@@ -49,12 +79,53 @@ public class UsageDAO {
             st.close();
         }
         catch (SQLException se) {
-            System.err.println("UseDAO: Threw a SQLException retrieving "
-                    + "inspections from Inspections table.");
+            System.err.println("UseDAO: Threw a SQLException retrieving facility start date "
+                    + "from the use table.");
             System.err.println(se.getMessage());
             se.printStackTrace();
         }
-        return listOfInspections;
+        return facilityStartDate;
+    }
+
+
+    /**
+     * Generates list of all usage assignments at a given Facility
+     * @param facility The Facility whose usage assignments are being listed
+     * @return Returns a list of FacilityUse objects with room number and start and end dates
+     */
+    public List<FacilityUse> listActualUsage(Facility facility) {
+
+        List<FacilityUse> listOfUsage = new ArrayList<FacilityUse>();
+
+        try {
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String listUsageQuery = "SELECT * FROM use WHERE facility_id = '" +
+                    facility.getFacilityID() + "' ORDER BY room_number, start_date";
+
+            ResultSet useRS = st.executeQuery(listUsageQuery);
+            System.out.println("UseDAO: ********** Query " + listUsageQuery + "\n");
+
+            while ( useRS.next() ) {
+                FacilityUse use = new FacilityUse();
+                use.setFacilityID(facility.getFacilityID());
+                use.setRoomNumber(useRS.getInt("room_number"));
+                use.setStartDate(useRS.getDate("start_date").toLocalDate());
+                use.setEndDate(useRS.getDate("end_date").toLocalDate());
+                listOfUsage.add(use);
+            }
+
+            //close to manage resources
+            useRS.close();
+            st.close();
+            return listOfUsage;
+        }
+        catch (SQLException se) {
+            System.err.println("UseDAO: Threw a SQLException retrieving list of usage from use table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -102,81 +173,6 @@ public class UsageDAO {
 
 
     /**
-     * Assigns Facility to use by adding it to the use table
-     * @param facilityUse instance of FacilityUse to be assigned, indicating room number and start and end dates
-     */
-    public void assignFacilityToUse(FacilityUse facilityUse) {
-
-        Connection con = DBHelper.getConnection();
-        PreparedStatement usePst = null;
-
-        try {
-            //Insert the facility ID, room number, and start/end dates into use table
-            String useStm = "INSERT INTO use (facility_id, room_number, start_date, "
-                    + "end_date) VALUES (?, ?, ?, ?)";
-            usePst = con.prepareStatement(useStm);
-            usePst.setInt(1, facilityUse.getFacilityID());
-            usePst.setInt(2, facilityUse.getRoomNumber());
-            usePst.setDate(3, Date.valueOf(facilityUse.getStartDate()));
-            usePst.setDate(4, Date.valueOf(facilityUse.getEndDate()));
-            usePst.executeUpdate();
-            System.out.println("UseDAO: ********** Query " + usePst + "\n");
-
-            //close to manage resources
-            usePst.close();
-            con.close();
-        }
-        catch (SQLException se) {
-            System.err.println("UseDAO: Threw a SQLException assigning a facility "
-                    + "to use in the use table.");
-            System.err.println(se.getMessage());
-            se.printStackTrace();
-        }
-    }
-
-
-    /**
-     * Generates list of all usage assignments at a given Facility
-     * @param facility The Facility whose usage assignments are being listed
-     * @return Returns a list of FacilityUse objects with room number and start and end dates
-     */
-    public List<FacilityUse> listActualUsage(Facility facility) {
-
-        List<FacilityUse> listOfUsage = new ArrayList<FacilityUse>();
-
-        try {
-
-            Statement st = DBHelper.getConnection().createStatement();
-            String listUsageQuery = "SELECT * FROM use WHERE facility_id = '" +
-                    facility.getFacilityID() + "' ORDER BY room_number, start_date";
-
-            ResultSet useRS = st.executeQuery(listUsageQuery);
-            System.out.println("UseDAO: ********** Query " + listUsageQuery + "\n");
-
-            while ( useRS.next() ) {
-                FacilityUse use = new FacilityUse();
-                use.setFacilityID(facility.getFacilityID());
-                use.setRoomNumber(useRS.getInt("room_number"));
-                use.setStartDate(useRS.getDate("start_date").toLocalDate());
-                use.setEndDate(useRS.getDate("end_date").toLocalDate());
-                listOfUsage.add(use);
-            }
-
-            //close to manage resources
-            useRS.close();
-            st.close();
-            return listOfUsage;
-        }
-        catch (SQLException se) {
-            System.err.println("UseDAO: Threw a SQLException retrieving list of usage from use table.");
-            System.err.println(se.getMessage());
-            se.printStackTrace();
-        }
-        return null;
-    }
-
-
-    /**
      * Vacates a Facility or a room by setting end date of current assignment to previous day
      * @param facility the Facility that will be vacated
      * @param roomNumber the room to vacate (if 0, the entire Facility will be vacated
@@ -211,24 +207,28 @@ public class UsageDAO {
 
 
     /**
-     * Gets the start date of a given Facility
-     * @param facility the Facility whose start date will be retrieved
-     * @return Returns the start date of the selected Facility
+     * Generates a list of inspections at a given Facility
+     * @param facility the facility that will be searched for inspections
+     * @return returns listOfInspections
      */
-    public LocalDate getFacilityStartDate(Facility facility) {
+    public List<FacilityInspection> listInspections(Facility facility) {
 
-        LocalDate facilityStartDate = null;
+        List<FacilityInspection> listOfInspections = new ArrayList<FacilityInspection>();
+
         try {
-
             Statement st = DBHelper.getConnection().createStatement();
-            String getFacilityStartDateQuery = "SELECT start_date FROM use WHERE facility_id = '" +
-                    facility.getFacilityID() + "' ORDER BY start_date LIMIT 1";
+            String listInspectionsQuery = "SELECT * FROM inspection WHERE "
+                    + "facility_id = '" + facility.getFacilityID() + "'";
 
-            ResultSet useRS = st.executeQuery(getFacilityStartDateQuery);
-            System.out.println("UseDAO: ********** Query " + getFacilityStartDateQuery + "\n");
+            ResultSet useRS = st.executeQuery(listInspectionsQuery);
+            System.out.println("UseDAO: ********** Query " + listInspectionsQuery + "\n");
 
             while ( useRS.next() ) {
-                facilityStartDate = useRS.getDate("start_date").toLocalDate();
+                FacilityInspection inspec = new FacilityInspection();
+                inspec.setInspection_type(useRS.getString("inspection_type"));
+                inspec.setInspection_detail(useRS.getString("inspection_detail"));
+                inspec.setFacility_ID(facility.getFacilityID());
+                listOfInspections.add(inspec);
             }
 
             //close to manage resources
@@ -236,11 +236,11 @@ public class UsageDAO {
             st.close();
         }
         catch (SQLException se) {
-            System.err.println("UseDAO: Threw a SQLException retrieving facility start date "
-                    + "from the use table.");
+            System.err.println("UseDAO: Threw a SQLException retrieving "
+                    + "inspections from Inspections table.");
             System.err.println(se.getMessage());
             se.printStackTrace();
         }
-        return facilityStartDate;
+        return listOfInspections;
     }
 }
