@@ -19,7 +19,7 @@ public class facilityDetails extends Facility {
     public String getLocation(){
         return location;
     }
-    public void setLocation(){
+    public void setLocation(String location){
         this.location = location;
     }
     public int getPhoneNumber(){
