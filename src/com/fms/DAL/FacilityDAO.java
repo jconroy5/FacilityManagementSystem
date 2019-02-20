@@ -37,6 +37,7 @@ public class FacilityDAO {
             String addStm = "INSERT INTO facility_detail(name, facility_id, number_of_rooms, phone) VALUES(?, ?, ?, ?)";
             addPst = con.prepareStatement(addStm);
             addPst.setString(1, newFacility.getDetails().getName());
+            addPst.setString(1, newFacility.getDetails().getLocation());
             addPst.setInt(2, newFacility.getDetails().getFacilityID());
             addPst.setInt(3, newFacility.getDetails().getNumberOfRooms());
             if (newFacility.getDetails().getPhoneNumber() != 0) {
