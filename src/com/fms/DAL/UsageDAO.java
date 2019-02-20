@@ -98,4 +98,78 @@ public class UsageDAO {
         }
         return result;
     }
+
+
+    /**
+     * Assigns Facility to use by adding it to the use table
+     * @param facilityUse instance of FacilityUse to be assigned, indicating room number and start and end dates
+     */
+    public void assignFacilityToUse(FacilityUse facilityUse) {
+
+        Connection con = DBHelper.getConnection();
+        PreparedStatement usePst = null;
+
+        try {
+            //Insert the facility ID, room number, and start/end dates into use table
+            String useStm = "INSERT INTO use (facility_id, room_number, start_date, "
+                    + "end_date) VALUES (?, ?, ?, ?)";
+            usePst = con.prepareStatement(useStm);
+            usePst.setInt(1, facilityUse.getFacilityID());
+            usePst.setInt(2, facilityUse.getRoomNumber());
+            usePst.setDate(3, Date.valueOf(facilityUse.getStartDate()));
+            usePst.setDate(4, Date.valueOf(facilityUse.getEndDate()));
+            usePst.executeUpdate();
+            System.out.println("UseDAO: ********** Query " + usePst + "\n");
+
+            //close to manage resources
+            usePst.close();
+            con.close();
+        }
+        catch (SQLException se) {
+            System.err.println("UseDAO: Threw a SQLException assigning a facility "
+                    + "to use in the use table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+    }
+
+    /**
+     * Generates list of all usage assignments at a given Facility
+     * @param facility The Facility whose usage assignments are being listed
+     * @return Returns a list of FacilityUse objects with room number and start and end dates
+     */
+    public List<FacilityUse> listActualUsage(Facility facility) {
+
+        List<FacilityUse> listOfUsage = new ArrayList<FacilityUse>();
+
+        try {
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String listUsageQuery = "SELECT * FROM use WHERE facility_id = '" +
+                    facility.getFacilityID() + "' ORDER BY room_number, start_date";
+
+            ResultSet useRS = st.executeQuery(listUsageQuery);
+            System.out.println("UseDAO: ********** Query " + listUsageQuery + "\n");
+
+            while ( useRS.next() ) {
+                FacilityUse use = new FacilityUse();
+                use.setFacilityID(facility.getFacilityID());
+                use.setRoomNumber(useRS.getInt("room_number"));
+                use.setStartDate(useRS.getDate("start_date").toLocalDate());
+                use.setEndDate(useRS.getDate("end_date").toLocalDate());
+                listOfUsage.add(use);
+            }
+
+            //close to manage resources
+            useRS.close();
+            st.close();
+            return listOfUsage;
+        }
+        catch (SQLException se) {
+            System.err.println("UseDAO: Threw a SQLException retrieving list of usage from use table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+        return null;
+    }
 }
