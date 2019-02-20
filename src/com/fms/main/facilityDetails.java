@@ -1,7 +1,7 @@
 package com.fms.main;
 
 public class facilityDetails extends Facility {
-    //facility name, location, phone number, and the number of rooms on site
+    //vars for facility name, location, phone number, and the number of rooms on site
     private String name;
     private String location;
     private int phoneNumber;

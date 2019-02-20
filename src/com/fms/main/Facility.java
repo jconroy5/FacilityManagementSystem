@@ -2,7 +2,7 @@ package com.fms.main;
 
 public class Facility {
 
-    //facilityDetails and ID number per Facility
+    //vars for facilityDetails and ID number per Facility
     private facilityDetails Details;
     private int facilityID;
 
