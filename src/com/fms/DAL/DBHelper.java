@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * DBHelper.java copied from BookStore, COMP 373/473, Spring 2019.
+ */
 public class DBHelper {
 
     public static Connection getConnection() {
