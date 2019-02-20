@@ -57,6 +57,7 @@ public class UsageDAO {
         return listOfInspections;
     }
 
+
     /**
      * Checks if given Facility is in use given a specific interval of time, by room number
      * @param facilityUse
@@ -133,6 +134,7 @@ public class UsageDAO {
         }
     }
 
+
     /**
      * Generates list of all usage assignments at a given Facility
      * @param facility The Facility whose usage assignments are being listed
@@ -171,5 +173,39 @@ public class UsageDAO {
             se.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * Vacates a Facility or a room by setting end date of current assignment to previous day
+     * @param facility the Facility that will be vacated
+     * @param roomNumber the room to vacate (if 0, the entire Facility will be vacated
+     */
+    public void vacateFacility(Facility facility, int roomNumber) {
+
+        try {
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String vacateQuery = "";
+
+            List<FacilityUse> usageList = listActualUsage(facility);
+            for (FacilityUse use : usageList) {
+                if ((use.getRoomNumber() == roomNumber || use.getRoomNumber() == 0) & ((LocalDate.now().equals(use.getStartDate()) ||
+                        LocalDate.now().isAfter(use.getStartDate())) & LocalDate.now().equals(use.getEndDate()) ||
+                        LocalDate.now().isBefore(use.getEndDate()))) {
+                    vacateQuery = "UPDATE use SET end_date = '" + Date.valueOf(LocalDate.now().minusDays(1)) +
+                            "' WHERE facility_id = " + facility.getFacilityID() + "AND room_number = " + roomNumber +
+                            "AND start_date = '" + Date.valueOf(use.getStartDate()) + "'";
+                }
+            }
+
+            st.execute(vacateQuery);
+            System.out.println("UseDAO: ********** Query " + vacateQuery + "\n");
+        }
+        catch (SQLException se){
+            System.err.println("UseDAO: Threw a SQLException vacating the facility.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
     }
 }
