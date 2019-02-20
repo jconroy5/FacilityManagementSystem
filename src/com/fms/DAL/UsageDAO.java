@@ -208,4 +208,39 @@ public class UsageDAO {
             se.printStackTrace();
         }
     }
+
+
+    /**
+     * Gets the start date of a given Facility
+     * @param facility the Facility whose start date will be retrieved
+     * @return Returns the start date of the selected Facility
+     */
+    public LocalDate getFacilityStartDate(Facility facility) {
+
+        LocalDate facilityStartDate = null;
+        try {
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String getFacilityStartDateQuery = "SELECT start_date FROM use WHERE facility_id = '" +
+                    facility.getFacilityID() + "' ORDER BY start_date LIMIT 1";
+
+            ResultSet useRS = st.executeQuery(getFacilityStartDateQuery);
+            System.out.println("UseDAO: ********** Query " + getFacilityStartDateQuery + "\n");
+
+            while ( useRS.next() ) {
+                facilityStartDate = useRS.getDate("start_date").toLocalDate();
+            }
+
+            //close to manage resources
+            useRS.close();
+            st.close();
+        }
+        catch (SQLException se) {
+            System.err.println("UseDAO: Threw a SQLException retrieving facility start date "
+                    + "from the use table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+        return facilityStartDate;
+    }
 }
