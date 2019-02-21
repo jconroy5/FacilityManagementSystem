@@ -49,4 +49,49 @@ public class MaintenanceDAO {
         }
         return null;
     }
+
+
+    /**
+     * Schedules a new Maintenance Request
+     * Requests are first added, then removed from the maint_request table
+     * @param maintenanceRequest the maintenance that is requested at a given Facility
+     */
+    public void scheduleMaintenance(Maintenance maintenanceRequest) {
+
+        try {
+            Statement st = DBHelper.getConnection().createStatement();
+            String scheduleMaintenanceAddQuery = "INSERT INTO maintenance (facility_id, details, cost) VALUES (" +
+                    maintenanceRequest.getFacilityID() + ", '" + maintenanceRequest.getDetails() +
+                    "', " + maintenanceRequest.getCost() + ")";
+            st.execute(scheduleMaintenanceAddQuery);
+            System.out.println("MaintenanceDAO: ********** Query " + scheduleMaintenanceAddQuery + "\n");
+
+            //close to manage resources
+            st.close();
+        }
+        catch (SQLException se) {
+            System.err.println("MaintenanceDAO: Threw a SQLException adding a maintenance "
+                    + "request to maintenance table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+        try {
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String scheduleMaintenanceRemoveQuery = "DELETE FROM maint_request WHERE facility_id = " +
+                    maintenanceRequest.getFacilityID() + " AND details = '" + maintenanceRequest.getDetails() +
+                    "' AND cost = " + maintenanceRequest.getCost();
+            st.execute(scheduleMaintenanceRemoveQuery);
+            System.out.println("MaintenanceDAO: ********** Query " + scheduleMaintenanceRemoveQuery + "\n");
+
+            //close to manage resources
+            st.close();
+        }
+        catch (SQLException se) {
+            System.err.println("MaintenanceDAO: Threw a SQLException removing a "
+                    + "maintenance request from maint_request table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+    }
 }

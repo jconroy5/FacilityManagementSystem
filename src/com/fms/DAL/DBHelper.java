@@ -34,12 +34,12 @@ public class DBHelper {
         try {
 
             connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/BookStore", "student", "Comp442");
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT VERSION()");
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("SELECT VERSION()");
 
-            if (rs.next()) {
-                System.out.println("DBHelper: The Database Version is " + rs.getString(1));
-            }
+                if (rs.next()) {
+                    System.out.println("DBHelper: The Database Version is " + rs.getString(1));
+                }
 
         } catch (SQLException e) {
 
