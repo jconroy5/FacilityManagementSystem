@@ -130,4 +130,43 @@ public class MaintenanceDAO {
         }
         return 0;
     }
+
+    /**
+     * Generates list of maintenance requests from maint_table
+     * @param facility the Facility whose maintenance requests are being listed
+     * @return List of current maintenance requests for a given Facility
+     */
+    public List<Maintenance> listMaintRequests(Facility facility) {
+
+        List<Maintenance> listOfMaintRequests = new ArrayList<Maintenance>();
+
+        try {
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String listMaintRequestsQuery = "SELECT * FROM maint_request WHERE facility_id = '" +
+                    facility.getFacilityID() + "' ORDER BY cost";
+
+            ResultSet maintRS = st.executeQuery(listMaintRequestsQuery);
+            System.out.println("UseDAO: ********** Query " + listMaintRequestsQuery + "\n");
+
+            while ( maintRS.next() ) {
+                Maintenance maintenanceRequest = new Maintenance();
+                maintenanceRequest.setMaintenanceDetails(maintRS.getString("maintenanceDetails"));
+                maintenanceRequest.setCost(maintRS.getInt("cost"));
+                maintenanceRequest.setFacilityID(facility.getFacilityID());
+                listOfMaintRequests.add(maintenanceRequest);
+            }
+
+            //close to manage resources
+            maintRS.close();
+            st.close();
+        }
+        catch (SQLException se) {
+            System.err.println("UseDAO: Threw a SQLException retreiving list of maintenance "
+                    + "requests from maint_request table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+        return listOfMaintRequests;
+    }
 }
