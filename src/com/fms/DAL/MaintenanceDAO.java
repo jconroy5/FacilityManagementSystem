@@ -20,7 +20,7 @@ public class MaintenanceDAO {
      * @param facility the Facility where the maintenance will be done
      * @param maintenanceDetails information about the maintenance request
      * @param cost the cost of the maintenance at the given Facility
-     * @return
+     * @return the Requested Maintenance object
      */
     public Maintenance makeFacilityMaintRequest(Facility facility, String maintenanceDetails, int cost) {
 
