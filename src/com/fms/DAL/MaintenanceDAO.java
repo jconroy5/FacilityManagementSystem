@@ -94,4 +94,40 @@ public class MaintenanceDAO {
             se.printStackTrace();
         }
     }
+
+
+    /**
+     * Calculates sum of maintenance costs at a given Facility
+     * @param facility the Facility where the maintenance took place
+     * @return The sum of maintenance costs
+     */
+    public int calcMaintenanceCostForFacility(Facility facility) {
+
+        try {
+
+            int totalCost = 0;
+
+            Statement st = DBHelper.getConnection().createStatement();
+            String calcMaintenanceCostQuery = "SELECT SUM(cost) FROM maintenance "
+                    + "WHERE facility_id = " + facility.getFacilityID();
+            ResultSet maintRS = st.executeQuery(calcMaintenanceCostQuery);
+
+            while ( maintRS.next() ) {
+                totalCost = maintRS.getInt(1);
+            }
+            System.out.println("MaintenanceDAO: ********** Query " + calcMaintenanceCostQuery + "\n");
+
+            //close to manage resources
+            maintRS.close();
+            st.close();
+            return totalCost;
+        }
+        catch (SQLException se) {
+            System.err.println("MaintenanceDAO: Threw a SQLException calculating total "
+                    + "maintenance cost from maintenance table.");
+            System.err.println(se.getMessage());
+            se.printStackTrace();
+        }
+        return 0;
+    }
 }
