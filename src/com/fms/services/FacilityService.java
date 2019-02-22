@@ -9,13 +9,13 @@ import java.util.List;
 
 public class FacilityService {
 
-    private FacilityDAO facDAO = new FacilityDAO();
-    private UsageDAO useDAO = new UsageDAO();
+    private FacilityDAO facilityDAO = new FacilityDAO();
+    private UsageDAO usageDAO = new UsageDAO();
 
     //Add new Facility to DB
     public void addNewFacility(Facility facility) {
         try {
-            facDAO.addNewFacility(facility);
+            facilityDAO.addNewFacility(facility);
         } catch (Exception se) {
             System.err.println("FacilityService: Threw an Exception adding new facility.");
             System.err.println(se.getMessage());
@@ -26,7 +26,7 @@ public class FacilityService {
     public Facility getFacilityInformation(int id) {
 
         try {
-            Facility facility = facDAO.getFacilityInformation(id);
+            Facility facility = facilityDAO.getFacilityInformation(id);
             return facility;
         } catch (Exception se) {
             System.err.println("FacilityService: Threw an Exception retrieving facility.");
@@ -39,7 +39,7 @@ public class FacilityService {
     public void removeFacility(int id) {
 
         try {
-            facDAO.removeFacility(id);
+            facilityDAO.removeFacility(id);
         } catch (Exception se) {
             System.err.println("FacilityService: Threw an Exception removing facility.");
             System.err.println(se.getMessage());
@@ -49,7 +49,7 @@ public class FacilityService {
     //adds phone number to a Facility listing in DB by Facility ID
     public void addFacilityDetail(int ID, int phoneNumber) {
         try {
-            facDAO.addFacilityDetail(ID, phoneNumber);
+            facilityDAO.addFacilityDetail(ID, phoneNumber);
         } catch (Exception se) {
             System.err.println("FacilityService: Threw an Exception updating phone in facility_detail.");
             System.err.println(se.getMessage());
@@ -59,7 +59,7 @@ public class FacilityService {
     //lists available Facilities
     public List<Facility> listFacilities() {
         try {
-            return facDAO.listFacilities();
+            return facilityDAO.listFacilities();
         } catch (Exception se) {
             System.err.println("FacilityService: Threw an Exception retrieving list of facilities.");
             System.err.println(se.getMessage());
@@ -71,7 +71,7 @@ public class FacilityService {
     public int requestAvailableCapacity(Facility facility) {
 
         try {
-            List<FacilityUse> usage = useDAO.listActualUsage(facility);
+            List<FacilityUse> usage = usageDAO.listActualUsage(facility);
             int roomsInUse = 0;
             if (usage.size() > 0) {
                 for (FacilityUse facUse : usage) {
