@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * DBHelper.java copied from BookStore, COMP 373/473, Spring 2019.
+ * DBHelper.java modeled from BookStore, COMP 373/473, Spring 2019.
  */
 public class DBHelper {
 
@@ -34,7 +34,7 @@ public class DBHelper {
         try {
 
             //Database hosted by Heroku PostgreSQL
-            connection = DriverManager.getConnection("jdbc:postgresql://ec2-54-83-55-115.compute-1.amazonaws.com:5432/dbnlucraumcoi5", "mivqlcuchuseyk", "64ca752c314f7ea94b5926bb9c3b12dc47c5146a40b7801062fec4a202391989");
+            connection = DriverManager.getConnection("postgres://ec2-54-83-55-115.compute-1.amazonaws.com:5432/dbnlucraumcoi5", "mivqlcuchuseyk", "64ca752c314f7ea94b5926bb9c3b12dc47c5146a40b7801062fec4a202391989");
                 Statement st = connection.createStatement();
                 ResultSet rs = st.executeQuery("SELECT VERSION()");
 
