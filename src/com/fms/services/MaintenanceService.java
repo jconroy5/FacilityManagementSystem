@@ -18,4 +18,13 @@ public class MaintenanceService {
         }
         return null;
     }
+
+    public void scheduleMaintenance(Maintenance maintenanceRequest) {
+        try {
+            maintenanceDAO.scheduleMaintenance(maintenanceRequest);
+        } catch (Exception se) {
+            System.err.println("MaintenanceService: Threw an Exception scheduling maintenance.");
+            System.err.println(se.getMessage());
+        }
+    }
 }
