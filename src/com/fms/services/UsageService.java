@@ -4,6 +4,7 @@ import com.fms.DAL.UsageDAO;
 import com.fms.usage.*;
 import com.fms.main.*;
 import java.util.List;
+import java.time.*;
 
 public class UsageService {
 
@@ -73,5 +74,16 @@ public class UsageService {
                 System.err.println(se.getMessage());
             }
         }
+    }
+
+    //Returns the date on which a given Facility was started
+    public LocalDate getFacilityStartDate(Facility facility) {
+        try {
+            return usageDAO.getFacilityStartDate(facility);
+        } catch (Exception se) {
+            System.err.println("UseService: Threw an Exception retrieving the facility start date.");
+            System.err.println(se.getMessage());
+        }
+        return null;
     }
 }
