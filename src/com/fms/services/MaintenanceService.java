@@ -27,4 +27,15 @@ public class MaintenanceService {
             System.err.println(se.getMessage());
         }
     }
+
+    public int calcMaintenanceCostForFacility(Facility facility) {
+        try {
+            return maintenanceDAO.calcMaintenanceCostForFacility(facility);
+        } catch (Exception se) {
+            System.err.println("MaintenanceService: Threw an Exception calculating "
+                    + "maintenance cost for facility.");
+            System.err.println(se.getMessage());
+        }
+        return 0;
+    }
 }
