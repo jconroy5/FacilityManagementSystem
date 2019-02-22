@@ -94,4 +94,18 @@ public class MaintenanceService {
         }
         return null;
     }
+
+    public List<Maintenance> listFacilityProblems(Facility facility) {
+        List<Maintenance> facilityProblems = new ArrayList<Maintenance>();
+        try {
+            facilityProblems.addAll(maintenanceDAO.listMaintRequests(facility));
+            facilityProblems.addAll(maintenanceDAO.listMaintenance(facility));
+            return facilityProblems;
+        } catch (Exception se) {
+            System.err.println("MaintenanceService: Threw an Exception "
+                    + "listing all facility problems.");
+            System.err.println(se.getMessage());
+        }
+        return null;
+    }
 }
