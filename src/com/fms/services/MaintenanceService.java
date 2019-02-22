@@ -5,6 +5,8 @@ import com.fms.maintenance.Maintenance;
 import com.fms.main.Facility;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.ArrayList;
 
 public class MaintenanceService {
 
@@ -69,5 +71,16 @@ public class MaintenanceService {
             System.err.println(se.getMessage());
         }
         return 0;
+    }
+
+    public List<Maintenance> listMaintRequests(Facility facility) {
+        try {
+            return maintenanceDAO.listMaintRequests(facility);
+        } catch (Exception se) {
+            System.err.println("MaintenanceService: Threw an Exception listing "
+                    + "maintenance requests.");
+            System.err.println(se.getMessage());
+        }
+        return null;
     }
 }
