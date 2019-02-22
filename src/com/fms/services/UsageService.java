@@ -86,4 +86,34 @@ public class UsageService {
         }
         return null;
     }
+
+    //vacates a room at a given Facility, if it is currently in use
+    public void vacateFacility(Facility facility, int roomNumber) {
+        try {
+            List<FacilityUse> usageList = listActualUsage(facility);
+            //check if room number is valid
+            if (roomNumber > facility.getDetails().getNumberOfRooms()) {
+                System.out.println("Invalid room number. There are only " +
+                        facility.getDetails().getNumberOfRooms() + " rooms at this facility.");
+            } else {
+                for (FacilityUse use : usageList) {
+                    //check if room is in use
+                    if (use.getRoomNumber() == 0 || (use.getRoomNumber() == roomNumber))  {
+                        if ((LocalDate.now().equals(use.getStartDate())) || LocalDate.now().isAfter(use.getStartDate())) {
+                            //if room is in use, vacate, else print vacate denial message
+                            if ((LocalDate.now().equals(use.getEndDate())) || (LocalDate.now().isBefore(use.getEndDate()))) {
+                                usageDAO.vacateFacility(facility, roomNumber);
+                            }
+                        } else {
+                            System.out.println("This room is not in use. Vacate request denied.");
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception se) {
+            System.err.println("UseService: Threw an Exception vacating a facility.");
+            System.err.println(se.getMessage());
+        }
+    }
 }
