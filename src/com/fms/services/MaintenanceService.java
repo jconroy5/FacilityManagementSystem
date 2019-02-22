@@ -83,4 +83,15 @@ public class MaintenanceService {
         }
         return null;
     }
+
+    public List<Maintenance> listMaintenance(Facility facility) {
+        try {
+            return maintenanceDAO.listMaintenance(facility);
+        } catch (Exception se) {
+            System.err.println("MaintenanceService: Threw an Exception listing "
+                    + "completed maintenance.");
+            System.err.println(se.getMessage());
+        }
+        return null;
+    }
 }
