@@ -116,4 +116,19 @@ public class UsageService {
             System.err.println(se.getMessage());
         }
     }
+
+    //calculate usage of a given Facility
+    public double calcUsageRate(Facility facility) {
+        try {
+            FacilityService facilityService = new FacilityService();
+            int totalRooms = facility.getDetails().getNumberOfRooms();
+            int roomsAvailable = facilityService.requestAvailableCapacity(facility);
+            int roomsInUse = totalRooms - roomsAvailable;
+            return Math.round(((double)roomsInUse / totalRooms) * 100d)/100d;
+        } catch (Exception se) {
+            System.err.println("UseService: Threw an Exception retrieving list of usage for calculating the usage rate.");
+            System.err.println(se.getMessage());
+        }
+        return 0.00;
+    }
 }
