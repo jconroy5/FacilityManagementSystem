@@ -58,28 +58,28 @@ Project Due Date:
 
 # Client Interfaces:
 
-• Facility:
-o public object listFacilities ()
-o public object getFacilityInformation()
-o public object requestAvailableCapacity()
-o public object addNewFacility()
-o public void addFacilityDetail()
-o public object removeFacility()
+Facility:
+- public object listFacilities ()
+- public object getFacilityInformation()
+- public object requestAvailableCapacity()
+- public object addNewFacility()
+- public void addFacilityDetail()
+- public object removeFacility()
 
-• Facility Use:
-o public object isInUseDuringInterval()
-o public object assignFacilityToUse()
-o public object vacateFacility()
-o public object listInspections()
-o public object listActualUsage()
-o public object calcUsageRate()
+Facility Use:
+- public object isInUseDuringInterval()
+- public object assignFacilityToUse()
+- public object vacateFacility()
+- public object listInspections()
+- public object listActualUsage()
+- public object calcUsageRate()
 
-• Facility Maintenance:
-o public object makeFacilityMaintRequest()
-o public object scheduleMaintenance() 
-o public object calcMaintenanceCostForFacility()
-o public object calcProblemRateForFacility()
-o public object calcDownTimeForFacility()
-o public object listMaintRequests()
-o public object listMaintenance()
-o public object listFacilityProblems() 
+Facility Maintenance:
+- public object makeFacilityMaintRequest()
+- public object scheduleMaintenance() 
+- public object calcMaintenanceCostForFacility()
+- public object calcProblemRateForFacility()
+- public object calcDownTimeForFacility()
+- public object listMaintRequests()
+- public object listMaintenance()
+- public object listFacilityProblems() 
