@@ -18,6 +18,7 @@ public class FacilityClient {
         facilityDetails office1Details = new facilityDetails();
         office1.setFacilityID(1);
         office1Details.setName("Super Company New York");
+        office1Details.setLocation("New York, NY");
         office1Details.setNumberOfRooms(10);
         office1.setDetails(office1Details);
 
@@ -26,6 +27,7 @@ public class FacilityClient {
         facilityDetails office2Details = new facilityDetails();
         office2.setFacilityID(2);
         office2Details.setName("Super Company Atlanta");
+        office2Details.setLocation("Atlanta, GA");
         office2Details.setNumberOfRooms(17);
         office2.setDetails(office2Details);
 
@@ -34,6 +36,7 @@ public class FacilityClient {
         facilityDetails office3Details = new facilityDetails();
         office3.setFacilityID(3);
         office3Details.setName("Super Company Los Angeles");
+        office3Details.setLocation("Los Angeles, CA");
         office3Details.setNumberOfRooms(30);
         office3.setDetails(office3Details);
 
@@ -41,7 +44,8 @@ public class FacilityClient {
         Facility office4 = new Facility();
         facilityDetails office4Details = new facilityDetails();
         office4.setFacilityID(4);
-        office2Details.setName("Super Company Austin");
+        office4Details.setName("Super Company Austin");
+        office4Details.setLocation("Austin, TX");
         office4Details.setNumberOfRooms(23);
         office4.setDetails(office4Details);
 
@@ -51,6 +55,7 @@ public class FacilityClient {
         office5.setFacilityID(5);
         facilityDetails detail = new facilityDetails();
         detail.setName("Super Company Chicago");
+        detail.setLocation("Chicago, IL");
         detail.setNumberOfRooms(20);
         office5.setDetails(detail);
 

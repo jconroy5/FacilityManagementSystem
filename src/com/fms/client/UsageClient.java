@@ -23,6 +23,7 @@ public class UsageClient {
         facilityDetails office1Details = new facilityDetails();
         office1.setFacilityID(1);
         office1Details.setName("Super Company New York");
+        office1Details.setLocation("New York, NY");
         office1Details.setNumberOfRooms(10);
         office1.setDetails(office1Details);
 
@@ -31,6 +32,7 @@ public class UsageClient {
         facilityDetails office2Details = new facilityDetails();
         office2.setFacilityID(2);
         office2Details.setName("Super Company Atlanta");
+        office2Details.setLocation("Atlanta, GA");
         office2Details.setNumberOfRooms(17);
         office2.setDetails(office2Details);
 
@@ -39,6 +41,7 @@ public class UsageClient {
         facilityDetails office3Details = new facilityDetails();
         office3.setFacilityID(3);
         office3Details.setName("Super Company Los Angeles");
+        office3Details.setLocation("Los Angeles, CA");
         office3Details.setNumberOfRooms(30);
         office3.setDetails(office3Details);
 
@@ -46,7 +49,8 @@ public class UsageClient {
         Facility office4 = new Facility();
         facilityDetails office4Details = new facilityDetails();
         office4.setFacilityID(4);
-        office2Details.setName("Super Company Austin");
+        office4Details.setName("Super Company Austin");
+        office4Details.setLocation("Austin, TX");
         office4Details.setNumberOfRooms(23);
         office4.setDetails(office4Details);
 
@@ -60,25 +64,26 @@ public class UsageClient {
         }
 
         //new Facility that will be checked for usage interval
-        FacilityUse factUse = new FacilityUse();;
-        factUse.setFacilityID(5);
-        facilityDetails factDet = new facilityDetails();
-        factDet.setNumberOfRooms(20);
-        factDet.setName("Super Company Chicago");
-        factDet.setFacilityID(5);
-        factUse.setDetails(factDet);
-        facilityService.addNewFacility(factUse);
-        factUse.setStartDate(LocalDate.of(2019, 1, 14));
-        factUse.setEndDate(LocalDate.of(2019, 5, 3));
-        factUse.setRoomNumber(1);
+        FacilityUse officeUse = new FacilityUse();;
+        officeUse.setFacilityID(5);
+        facilityDetails officeDetails = new facilityDetails();
+        officeDetails.setNumberOfRooms(20);
+        officeDetails.setName("Super Company Chicago");
+        officeDetails.setLocation("Chicago, IL");
+        officeDetails.setFacilityID(5);
+        officeUse.setDetails(officeDetails);
+        facilityService.addNewFacility(officeUse);
+        officeUse.setStartDate(LocalDate.of(2019, 1, 14));
+        officeUse.setEndDate(LocalDate.of(2019, 5, 3));
+        officeUse.setRoomNumber(1);
 
         System.out.println("\nUsageClient: Checking if Facility is in use...");
 
-        boolean result = useService.isInUseDuringInterval(factUse);
+        boolean result = useService.isInUseDuringInterval(officeUse);
 
-        System.out.print("\tFacility #" + factUse.getFacilityID());
-        if (factUse.getRoomNumber() != 0) {
-            System.out.print(" - Room " + factUse.getRoomNumber());
+        System.out.print("\tFacility #" + officeUse.getFacilityID());
+        if (officeUse.getRoomNumber() != 0) {
+            System.out.print(" - Room " + officeUse.getRoomNumber());
         }
         //if in use,
         if (result) {
@@ -87,33 +92,33 @@ public class UsageClient {
         } else {
             System.out.print(" is NOT ");
         }
-        System.out.print("in use from " + factUse.getStartDate() + " to " + factUse.getEndDate() + ".\n");
+        System.out.print("in use from " + officeUse.getStartDate() + " to " + officeUse.getEndDate() + ".\n");
 
         //assign the facility to use during the previously checked room and start/end date
         System.out.println("\nUsageClient: Assigning Facility Usage...");
-        useService.assignFacilityToUse(factUse);
+        useService.assignFacilityToUse(officeUse);
         System.out.println("\nUsageClient: Facility/Room has been assigned");
 
         //checking again if facility is in use
         System.out.println("\nUsageClient: Checking if Facility is in use...");
 
-        boolean result2 = useService.isInUseDuringInterval(factUse);
+        boolean result2 = useService.isInUseDuringInterval(officeUse);
 
-        System.out.print("\tFacility #" + factUse.getFacilityID());
-        if (factUse.getRoomNumber() != 0) {
-            System.out.print(" - Room " + factUse.getRoomNumber());
+        System.out.print("\tFacility #" + officeUse.getFacilityID());
+        if (officeUse.getRoomNumber() != 0) {
+            System.out.print(" - Room " + officeUse.getRoomNumber());
         }
         if (result2) {
             System.out.print(" IS ");
         } else {
             System.out.print(" is NOT ");
         }
-        System.out.print("in use from " + factUse.getStartDate() + " to " + factUse.getEndDate() + ".\n");
+        System.out.print("in use from " + officeUse.getStartDate() + " to " + officeUse.getEndDate() + ".\n");
 
         //Generate list of actual usage of given Facility
         System.out.println("\nUsageClient: Calculating actual usage of Facility...");
 
-        List<FacilityUse> usageList = useService.listActualUsage(factUse);
+        List<FacilityUse> usageList = useService.listActualUsage(officeUse);
         Object[][] usage = new Object[usageList.size() + 1][3];
         usage[0] = new Object[] {"Room #", "Start Date", "End Date"};
         for (int i = 1; i <= usageList.size(); i++) {
@@ -123,19 +128,19 @@ public class UsageClient {
                 usage[i][0] = "all";
             }
         }
-        System.out.println("Usage at Facility #" + factUse.getFacilityID());
+        System.out.println("Usage at Facility #" + officeUse.getFacilityID());
         for (Object[] row : usage) {
             System.out.format("\t%-10s%-15s%-15s\n", row);
         }
 
         System.out.println("\nUsageClient: Vacating Facility...");
-        useService.vacateFacility(factUse, 1);
+        useService.vacateFacility(officeUse, 1);
         System.out.println("\nUsageClient: Facility has been vacated");
 
         //check Facility usage after being vacated
         System.out.println("\nUsageClient: Calculating Facility usage after being vacated...");
 
-        List<FacilityUse> usageList2 = useService.listActualUsage(factUse);
+        List<FacilityUse> usageList2 = useService.listActualUsage(officeUse);
         Object[][] usage2 = new Object[usageList2.size() + 1][3];
         usage2[0] = new Object[] {"Room #", "Start Date", "End Date"};
         for (int i = 1; i <= usageList2.size(); i++) {
@@ -145,7 +150,7 @@ public class UsageClient {
                 usage2[i][0] = "all";
             }
         }
-        System.out.println("Usage at Facility #" + factUse.getFacilityID());
+        System.out.println("Usage at Facility #" + officeUse.getFacilityID());
         for (Object[] row : usage2) {
             System.out.format("\t%-10s%-15s%-15s\n", row);
         }
