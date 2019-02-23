@@ -33,7 +33,11 @@ public class DBHelper {
 
         try {
 
-            //Database hosted by Heroku PostgreSQL
+            /**
+             * Database hosted on Heroku using PostgreSQL add-on.
+             * NOTE: We were able to deploy our code in our Heroku app with the PostgreSQL add-on, however, we ran into trouble getting the credentials for the database to work here.
+             * The credentials are not pointing to the relational database correctly, causing DBHelper exceptions to be thrown when running a client interface.
+             */
             connection = DriverManager.getConnection("postgresql://ec2-54-83-55-115.compute-1.amazonaws.com:5432/dbnlucraumcoi5", "mivqlcuchuseyk", "64ca752c314f7ea94b5926bb9c3b12dc47c5146a40b7801062fec4a202391989");
                 Statement st = connection.createStatement();
                 ResultSet rs = st.executeQuery("SELECT VERSION()");
