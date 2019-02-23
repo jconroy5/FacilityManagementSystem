@@ -26,14 +26,17 @@ Supporting documents:
 - Object Modeling
 (http://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/)
 - A UML Modeling Tool for documentation
+
 Project Expectation:
 - Group (only two students in a group) executed project
 - Submission of Design and Code
 - Submission of your DB table structure/model
+
 Project Submission and Grading:
 - 15% of total grade
 - Submit the UML model of the Domain Model
 - Submit the location of your solution for the implementation
 - Submit both to TA and Instructor
+
 Project Due Date:
 - Submission of Design and Implementation - EOD 02/24/2019 
