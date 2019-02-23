@@ -54,4 +54,32 @@ Project Submission and Grading:
 - Submit both to TA and Instructor
 
 Project Due Date:
-- Submission of Design and Implementation - EOD 02/24/2019 
+- Submission of Design and Implementation - EOD 02/24/2019
+
+# Client Interfaces:
+
+• Facility:
+o public object listFacilities ()
+o public object getFacilityInformation()
+o public object requestAvailableCapacity()
+o public object addNewFacility()
+o public void addFacilityDetail()
+o public object removeFacility()
+
+• Facility Use:
+o public object isInUseDuringInterval()
+o public object assignFacilityToUse()
+o public object vacateFacility()
+o public object listInspections()
+o public object listActualUsage()
+o public object calcUsageRate()
+
+• Facility Maintenance:
+o public object makeFacilityMaintRequest()
+o public object scheduleMaintenance() 
+o public object calcMaintenanceCostForFacility()
+o public object calcProblemRateForFacility()
+o public object calcDownTimeForFacility()
+o public object listMaintRequests()
+o public object listMaintenance()
+o public object listFacilityProblems() 
