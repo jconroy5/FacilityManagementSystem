@@ -1,16 +1,22 @@
-# FacilityManagementSystem
+# Facility Management System
 COMP 373/473 - Project 1 - Joseph Conroy and Nigel Castelino
 
 # To run a client interface:
 Select one of the client interfaces below to run by commenting out the other two.
 
 EXAMPLE - To run MaintenanceClient, the main method would look like this:
+
 //FacilityClient facilityClient = new FacilityClient();
+
 //UsageClient usageClient = new UsageClient();
+
 MaintenanceClient maintenanceClient = new MaintenanceClient();
 
+
+# Project Description:
+
 Project 1: Facility Management System Design and Implementation
-Project Description:
+
 In this project, we will start providing an object domain model for Facility Management System by
 addressing the design and implementation using OOP. The aim is to have a domain model that is
 designed using OOP that will be used to study Object relationship and Dependency.
