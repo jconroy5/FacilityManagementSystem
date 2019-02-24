@@ -61,7 +61,7 @@ Project Due Date:
 
 # Client Interfaces:
 
-Facility:
+Facility (FacilityClient):
 - public object listFacilities ()
 - public object getFacilityInformation()
 - public object requestAvailableCapacity()
@@ -69,7 +69,7 @@ Facility:
 - public void addFacilityDetail()
 - public object removeFacility()
 
-Facility Use:
+Facility Use (UsageClient):
 - public object isInUseDuringInterval()
 - public object assignFacilityToUse()
 - public object vacateFacility()
@@ -77,7 +77,7 @@ Facility Use:
 - public object listActualUsage()
 - public object calcUsageRate()
 
-Facility Maintenance:
+Facility Maintenance (MaintenanceClient):
 - public object makeFacilityMaintRequest()
 - public object scheduleMaintenance() 
 - public object calcMaintenanceCostForFacility()
