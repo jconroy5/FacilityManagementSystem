@@ -2,7 +2,7 @@
 COMP 373/473 - Project 1 - Joseph Conroy and Nigel Castelino
 
 # To run a client interface:
-In ClientInterface.java, select the client you want to run by commenting out the other two.
+In ClientInterface.java (src/com/fms/client), select the client you want to run by commenting out the other two.
 
 EXAMPLE - To run MaintenanceClient, the main method would look like this:
 
