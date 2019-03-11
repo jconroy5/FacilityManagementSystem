@@ -1,13 +1,12 @@
 package com.fms.main;
 
-public class facilityDetails extends Facility {
+public class FacilityDetails {
     //vars for facility name, location, phone number, and the number of rooms on site
     private String name;
-    private String location;
-    private int phoneNumber;
+    private long phoneNumber;
     private int numberOfRooms;
 
-    public facilityDetails(){}
+    public FacilityDetails(){}
 
     //getters and setters
     public String getName(){
@@ -16,16 +15,10 @@ public class facilityDetails extends Facility {
     public void setName(String name){
         this.name = name;
     }
-    public String getLocation(){
-        return location;
-    }
-    public void setLocation(String location){
-        this.location = location;
-    }
-    public int getPhoneNumber(){
+    public long getPhoneNumber(){
         return phoneNumber;
     }
-    public void setPhoneNumber(int phoneNumber){
+    public void setPhoneNumber(long phoneNumber){
         this.phoneNumber = phoneNumber;
     }
     public int getNumberOfRooms() {

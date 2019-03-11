@@ -1,8 +1,6 @@
 package com.fms.maintenance;
 
-import com.fms.main.Facility;
-
-public class Maintenance extends Facility {
+public class Maintenance {
 
     //vars for maintenance cost and optional details
     private int cost;

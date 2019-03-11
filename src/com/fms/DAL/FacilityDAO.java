@@ -115,7 +115,7 @@ public class FacilityDAO {
             Statement st = DBHelper.getConnection().createStatement();
             String selectDetailQuery = "SELECT name,facility_id,number_of_rooms,phone FROM facility_detail WHERE facility_id = '" + ID + "'";
             ResultSet detRS = st.executeQuery(selectDetailQuery);
-            facilityDetails detail = new facilityDetails();
+            FacilityDetails detail = new FacilityDetails();
 
             System.out.println("FacilityDAO: *************** Query " + selectDetailQuery + "\n");
 

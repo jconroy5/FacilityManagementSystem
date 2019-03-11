@@ -1,7 +1,7 @@
 package com.fms.client;
 
 import com.fms.main.Facility;
-import com.fms.main.facilityDetails;
+import com.fms.main.FacilityDetails;
 import com.fms.maintenance.Maintenance;
 import com.fms.services.MaintenanceService;
 import java.util.List;
@@ -17,7 +17,7 @@ public class MaintenanceClient {
 
         //office1
         Facility office1 = new Facility();
-        facilityDetails office1Details = new facilityDetails();
+        FacilityDetails office1Details = new FacilityDetails();
         office1.setFacilityID(1);
         office1Details.setName("Super Company New York");
         office1Details.setLocation("New York, NY");
@@ -26,7 +26,7 @@ public class MaintenanceClient {
 
         //office2
         Facility office2 = new Facility();
-        facilityDetails office2Details = new facilityDetails();
+        FacilityDetails office2Details = new FacilityDetails();
         office2.setFacilityID(2);
         office2Details.setName("Super Company Atlanta");
         office2Details.setLocation("Atlanta, GA");
@@ -35,7 +35,7 @@ public class MaintenanceClient {
 
         //office3
         Facility office3 = new Facility();
-        facilityDetails office3Details = new facilityDetails();
+        FacilityDetails office3Details = new FacilityDetails();
         office3.setFacilityID(3);
         office3Details.setName("Super Company Los Angeles");
         office3Details.setLocation("Los Angeles, CA");
@@ -44,7 +44,7 @@ public class MaintenanceClient {
 
         //office4
         Facility office4 = new Facility();
-        facilityDetails office4Details = new facilityDetails();
+        FacilityDetails office4Details = new FacilityDetails();
         office4.setFacilityID(4);
         office4Details.setName("Super Company Austin");
         office4Details.setLocation("Austin, TX");

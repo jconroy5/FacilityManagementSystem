@@ -2,17 +2,17 @@ package com.fms.main;
 
 public class Facility {
 
-    //vars for facilityDetails and ID number per Facility
-    private facilityDetails Details;
+    //vars for FacilityDetails and ID number per Facility
+    private FacilityDetails Details;
     private int facilityID;
 
     public Facility(){}
 
     //gettters and setters
-    public facilityDetails getDetails(){
+    public FacilityDetails getDetails(){
         return Details;
     }
-    public void setDetails(facilityDetails Details){
+    public void setDetails(FacilityDetails Details){
         this.Details = Details;
     }
     public int getFacilityID(){

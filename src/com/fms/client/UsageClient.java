@@ -20,7 +20,7 @@ public class UsageClient {
 
         //office1
         Facility office1 = new Facility();
-        facilityDetails office1Details = new facilityDetails();
+        FacilityDetails office1Details = new FacilityDetails();
         office1.setFacilityID(1);
         office1Details.setName("Super Company New York");
         office1Details.setLocation("New York, NY");
@@ -29,7 +29,7 @@ public class UsageClient {
 
         //office2
         Facility office2 = new Facility();
-        facilityDetails office2Details = new facilityDetails();
+        FacilityDetails office2Details = new FacilityDetails();
         office2.setFacilityID(2);
         office2Details.setName("Super Company Atlanta");
         office2Details.setLocation("Atlanta, GA");
@@ -38,7 +38,7 @@ public class UsageClient {
 
         //office3
         Facility office3 = new Facility();
-        facilityDetails office3Details = new facilityDetails();
+        FacilityDetails office3Details = new FacilityDetails();
         office3.setFacilityID(3);
         office3Details.setName("Super Company Los Angeles");
         office3Details.setLocation("Los Angeles, CA");
@@ -47,7 +47,7 @@ public class UsageClient {
 
         //office4
         Facility office4 = new Facility();
-        facilityDetails office4Details = new facilityDetails();
+        FacilityDetails office4Details = new FacilityDetails();
         office4.setFacilityID(4);
         office4Details.setName("Super Company Austin");
         office4Details.setLocation("Austin, TX");
@@ -66,7 +66,7 @@ public class UsageClient {
         //new Facility that will be checked for usage interval
         FacilityUse officeUse = new FacilityUse();;
         officeUse.setFacilityID(5);
-        facilityDetails officeDetails = new facilityDetails();
+        FacilityDetails officeDetails = new FacilityDetails();
         officeDetails.setNumberOfRooms(20);
         officeDetails.setName("Super Company Chicago");
         officeDetails.setLocation("Chicago, IL");

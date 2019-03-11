@@ -1,9 +1,8 @@
 package com.fms.usage;
 
-import com.fms.main.Facility;
 import java.time.LocalDate;
 
-public class FacilityUse extends Facility {
+public class FacilityUse {
 
     //room number within Facility and Facility's start and end dates of operation
     private int roomNumber;
