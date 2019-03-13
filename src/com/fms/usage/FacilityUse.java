@@ -1,33 +1,21 @@
 package com.fms.usage;
 
+import com.fms.main.Facility;
 import java.time.LocalDate;
 
-public class FacilityUse {
+public interface FacilityUse {
 
-    //room number within Facility and Facility's start and end dates of operation
-    private int roomNumber;
-    private LocalDate startDate;
-    private LocalDate endDate;
-
-    public FacilityUse() {}
-
-    //getters and setters
-    public int getRoomNumber() {
-        return roomNumber;
-    }
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
+    //declaring getters and setters
+    public void setFacility(Facility facility);
+    public Facility getFacility();
+    public int getUseID();
+    public void setUseID(int useID);
+    public int getFacilityID();
+    public void setFacilityID(int facilityID);
+    public int getRoomNumber();
+    public void setRoomNumber(int roomNumber);
+    public LocalDate getStartDate();
+    public void setStartDate(LocalDate startDate);
+    public LocalDate getEndDate();
+    public void setEndDate(LocalDate endDate);
 }

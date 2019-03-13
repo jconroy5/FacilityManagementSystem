@@ -1,7 +1,6 @@
 package com.fms.client;
 
-import com.fms.main.Facility;
-import com.fms.main.FacilityDetails;
+import com.fms.main.*;
 import com.fms.maintenance.Maintenance;
 import com.fms.services.MaintenanceService;
 import java.util.List;
@@ -16,40 +15,40 @@ public class MaintenanceClient {
          */
 
         //office1
-        Facility office1 = new Facility();
-        FacilityDetails office1Details = new FacilityDetails();
+        Facility office1 = new FacilityImpl();
+        FacilityDetails office1Details = new FacilityDetailsImpl();
         office1.setFacilityID(1);
         office1Details.setName("Super Company New York");
         office1Details.setLocation("New York, NY");
         office1Details.setNumberOfRooms(10);
-        office1.setDetails(office1Details);
+        office1.setFacilityDetail(office1Details);
 
         //office2
-        Facility office2 = new Facility();
-        FacilityDetails office2Details = new FacilityDetails();
+        Facility office2 = new FacilityImpl();
+        FacilityDetails office2Details = new FacilityDetailsImpl();
         office2.setFacilityID(2);
         office2Details.setName("Super Company Atlanta");
         office2Details.setLocation("Atlanta, GA");
         office2Details.setNumberOfRooms(17);
-        office2.setDetails(office2Details);
+        office2.setFacilityDetail(office2Details);
 
         //office3
-        Facility office3 = new Facility();
-        FacilityDetails office3Details = new FacilityDetails();
+        Facility office3 = new FacilityImpl();
+        FacilityDetails office3Details = new FacilityDetailsImpl();
         office3.setFacilityID(3);
         office3Details.setName("Super Company Los Angeles");
         office3Details.setLocation("Los Angeles, CA");
         office3Details.setNumberOfRooms(30);
-        office3.setDetails(office3Details);
+        office3.setFacilityDetail(office3Details);
 
         //office4
-        Facility office4 = new Facility();
-        FacilityDetails office4Details = new FacilityDetails();
+        Facility office4 = new FacilityImpl();
+        FacilityDetails office4Details = new FacilityDetailsImpl();
         office4.setFacilityID(4);
         office4Details.setName("Super Company Austin");
         office4Details.setLocation("Austin, TX");
         office4Details.setNumberOfRooms(23);
-        office4.setDetails(office4Details);
+        office4.setFacilityDetail(office4Details);
 
         //example maintenance request for office1
         System.out.println("\nMaintenanceClient: Creating New Maintenance Request...");
@@ -72,7 +71,7 @@ public class MaintenanceClient {
         Object[][] requests = new Object[maintRequestList.size() + 1][2];
         requests[0] = new Object[] {"Maintenance Request Details", "Cost"};
         for (int i = 1; i <= maintRequestList.size(); i++) {
-            requests[i] = new Object[] {maintRequestList.get(i-1).getDetails(), maintRequestList.get(i-1).getCost()};
+            requests[i] = new Object[] {maintRequestList.get(i-1).getMaintenanceDetails(), maintRequestList.get(i-1).getCost()};
         }
         System.out.println("Current Maintenance Requests at Facility #" + office2.getFacilityID() + ":");
         for (Object[] row : requests) {
@@ -85,7 +84,7 @@ public class MaintenanceClient {
         Object[][] maintenanceTable = new Object[maintenanceList.size() + 1][2];
         maintenanceTable[0] = new Object[] {"Maintenance Details", "Cost"};
         for (int i = 1; i <= maintenanceList.size(); i++) {
-            maintenanceTable[i] = new Object[] {maintenanceList.get(i-1).getDetails(), maintenanceList.get(i-1).getCost()};
+            maintenanceTable[i] = new Object[] {maintenanceList.get(i-1).getMaintenanceDetails(), maintenanceList.get(i-1).getCost()};
         }
         System.out.println("Completed Maintenance Requests at Facility #" + office2.getFacilityID() + ":");
         for (Object[] row : maintenanceTable) {
@@ -98,7 +97,7 @@ public class MaintenanceClient {
         Object[][] problems = new Object[facilityProblemsList.size() + 1][2];
         problems[0] = new Object[] {"Problem Details", "Cost"};
         for (int i = 1; i <= facilityProblemsList.size(); i++) {
-            problems[i] = new Object[] {facilityProblemsList.get(i-1).getDetails(), facilityProblemsList.get(i-1).getCost()};
+            problems[i] = new Object[] {facilityProblemsList.get(i-1).getMaintenanceDetails(), facilityProblemsList.get(i-1).getCost()};
         }
         System.out.println("Problems affecting Facility #" + office2.getFacilityID() + ":");
         for (Object[] row : problems) {

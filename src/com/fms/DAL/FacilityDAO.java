@@ -27,21 +27,21 @@ public class FacilityDAO {
         PreparedStatement addPst = null;
 
         try {
-            //Insert the facility object
+            //Facility
             String facStm = "INSERT INTO facility(id) VALUES(?)";
             facPst = con.prepareStatement(facStm);
             facPst.setInt(1, newFacility.getFacilityID());
             facPst.executeUpdate();
 
-            //Insert the facility_detail object
+            //FacilityDetails
             String addStm = "INSERT INTO facility_detail(name, facility_id, number_of_rooms, phone) VALUES(?, ?, ?, ?)";
             addPst = con.prepareStatement(addStm);
-            addPst.setString(1, newFacility.getDetails().getName());
-            addPst.setString(1, newFacility.getDetails().getLocation());
-            addPst.setInt(2, newFacility.getDetails().getFacilityID());
-            addPst.setInt(3, newFacility.getDetails().getNumberOfRooms());
-            if (newFacility.getDetails().getPhoneNumber() != 0) {
-                addPst.setInt(4, newFacility.getDetails().getPhoneNumber());
+            addPst.setInt(1, newFacility.getFacilityID());
+            addPst.setString(2, newFacility.getFacilityDetail().getName());
+            addPst.setString(3, newFacility.getFacilityDetail().getLocation());
+            addPst.setInt(4, newFacility.getFacilityDetail().getNumberOfRooms());
+            if (newFacility.getFacilityDetail().getPhoneNumber() != 0) {
+                addPst.setLong(4, newFacility.getFacilityDetail().getPhoneNumber());
             } else {
                 addPst.setNull(4, java.sql.Types.INTEGER);
             }
@@ -70,17 +70,16 @@ public class FacilityDAO {
      * @param ID Facility ID to which a phone number will be added
      * @param phoneNumber The phone number of the Facility to be added
      */
-    public void addFacilityDetail(int ID, int phoneNumber) {
+    public void addFacilityDetail(int ID, long phoneNumber) {
 
         try {
             Connection con = DBHelper.getConnection();
             PreparedStatement facPst = null;
-            //Get Facility
 
             String updateFacilityDetailQuery = "UPDATE facility_detail SET phone = ? WHERE facility_id = ?";
 
             facPst = con.prepareStatement(updateFacilityDetailQuery);
-            facPst.setInt(1, phoneNumber);
+            facPst.setLong(1, phoneNumber);
             facPst.setInt(2, ID);
             facPst.executeUpdate();
 
@@ -108,33 +107,33 @@ public class FacilityDAO {
 
         try {
 
-            Facility fac1 = new Facility();
-            fac1.setFacilityID(ID);
+            Facility newFacility = new FacilityImpl();
+            newFacility.setFacilityID(ID);
 
-            //Get details about facility
+            //get facilityDetail
             Statement st = DBHelper.getConnection().createStatement();
             String selectDetailQuery = "SELECT name,facility_id,number_of_rooms,phone FROM facility_detail WHERE facility_id = '" + ID + "'";
             ResultSet detRS = st.executeQuery(selectDetailQuery);
-            FacilityDetails detail = new FacilityDetails();
+            FacilityDetails detail = new FacilityDetailsImpl();
 
             System.out.println("FacilityDAO: *************** Query " + selectDetailQuery + "\n");
 
             while ( detRS.next() ) {
-                detail.setName(detRS.getString("name"));
-                detail.setLocation(detRS.getString("location"));
-                detail.setFacilityID(detRS.getInt("facility_id"));
-                detail.setNumberOfRooms(detRS.getInt("number_of_rooms"));
-                if (detRS.getInt("phone") != 0) {
-                    detail.setPhoneNumber(detRS.getInt("phone"));
+                detail.setName(detRS.getString("Name"));
+                detail.setLocation(detRS.getString("Location"));
+                detail.setFacilityID(detRS.getInt("Facility ID"));
+                detail.setNumberOfRooms(detRS.getInt("Number of Rooms"));
+                if (detRS.getLong("Phone Number") != 0) {
+                    detail.setPhoneNumber(detRS.getInt("Phone Number"));
                 }
             }
 
-            fac1.setDetails(detail);
+            newFacility.setFacilityDetail(detail);
 
             //close to manage resources
             detRS.close();
 
-            return fac1;
+            return newFacility;
         }
         catch (SQLException se) {
             System.err.println("FacilityDAO: Threw a SQLException retrieving the Facility object.");
@@ -215,10 +214,10 @@ public class FacilityDAO {
             ResultSet facRS = st.executeQuery(getAllFacilitiesQuery);
             System.out.println("FacilityDAO: *************** Query " + getAllFacilitiesQuery + "\n");
 
-            Facility fac1 = new Facility();
+            Facility newFacility = new FacilityImpl();
             while ( facRS.next() ) {
-                fac1.setFacilityID(facRS.getInt("id"));
-                listOfFacilities.add(getFacilityInformation(fac1.getFacilityID()));
+                newFacility.setFacilityID(facRS.getInt("Facility ID"));
+                listOfFacilities.add(getFacilityInformation(newFacility.getFacilityID()));
             }
 
             //close to manage resources

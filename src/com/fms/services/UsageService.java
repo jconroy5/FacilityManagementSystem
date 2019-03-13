@@ -22,14 +22,14 @@ public class UsageService {
     }
 
     //checks if a Facility is in use during a given interval
-    public boolean isInUseDuringInterval(FacilityUse facilityUse) {
+    public boolean isInUseDuringInterval(Facility facility, FacilityUse facilityUse) {
         //checks for a valid start date
         if (facilityUse.getStartDate().isAfter(facilityUse.getEndDate())) {
             System.out.println("The start date cannot be after the end date.");
             //checks for a valid number of rooms
-        } else if (facilityUse.getRoomNumber() > facilityUse.getDetails().getNumberOfRooms()) {
+        } else if (facilityUse.getRoomNumber() > facility.getFacilityDetail().getNumberOfRooms()) {
             System.out.println("Invalid room number. There are only " +
-                    facilityUse.getDetails().getNumberOfRooms() +
+                    facility.getFacilityDetail().getNumberOfRooms() +
                     " rooms at this facility.");
         } else {
             try {
@@ -54,17 +54,17 @@ public class UsageService {
     }
 
     //assigns a room number at a given Facility to use
-    public void assignFacilityToUse(FacilityUse facilityUse) {
+    public void assignFacilityToUse(Facility facility, FacilityUse facilityUse) {
         //check if the start date is valid
         if (facilityUse.getStartDate().isAfter(facilityUse.getEndDate())) {
             System.out.println("The start date cannot be after the end date.");
             //check if the room number is valid
-        } else if (facilityUse.getRoomNumber() > facilityUse.getDetails().getNumberOfRooms()) {
+        } else if (facilityUse.getRoomNumber() > facility.getFacilityDetail().getNumberOfRooms()) {
             System.out.println("Invalid room number. There are only " +
-                    facilityUse.getDetails().getNumberOfRooms() +
+                    facility.getFacilityDetail().getNumberOfRooms() +
                     " rooms at this facility.");
             //check if given room is already in use during interval
-        } else if (isInUseDuringInterval(facilityUse)) {
+        } else if (isInUseDuringInterval(facility, facilityUse)) {
             System.out.println("This room is already in use during this interval.");
         } else {
             try {
@@ -92,9 +92,9 @@ public class UsageService {
         try {
             List<FacilityUse> usageList = listActualUsage(facility);
             //check if room number is valid
-            if (roomNumber > facility.getDetails().getNumberOfRooms()) {
+            if (roomNumber > facility.getFacilityDetail().getNumberOfRooms()) {
                 System.out.println("Invalid room number. There are only " +
-                        facility.getDetails().getNumberOfRooms() + " rooms at this facility.");
+                        facility.getFacilityDetail().getNumberOfRooms() + " rooms at this facility.");
             } else {
                 for (FacilityUse use : usageList) {
                     //check if room is in use
@@ -121,7 +121,7 @@ public class UsageService {
     public double calcUsageRate(Facility facility) {
         try {
             FacilityService facilityService = new FacilityService();
-            int totalRooms = facility.getDetails().getNumberOfRooms();
+            int totalRooms = facility.getFacilityDetail().getNumberOfRooms();
             int roomsAvailable = facilityService.requestAvailableCapacity(facility);
             int roomsInUse = totalRooms - roomsAvailable;
             return Math.round(((double)roomsInUse / totalRooms) * 100d)/100d;

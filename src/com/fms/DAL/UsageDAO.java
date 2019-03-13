@@ -107,7 +107,7 @@ public class UsageDAO {
             System.out.println("UseDAO: ********** Query " + listUsageQuery + "\n");
 
             while ( useRS.next() ) {
-                FacilityUse use = new FacilityUse();
+                FacilityUse use = new FacilityUseImpl();
                 use.setFacilityID(facility.getFacilityID());
                 use.setRoomNumber(useRS.getInt("room_number"));
                 use.setStartDate(useRS.getDate("start_date").toLocalDate());
@@ -224,11 +224,11 @@ public class UsageDAO {
             System.out.println("UseDAO: ********** Query " + listInspectionsQuery + "\n");
 
             while ( useRS.next() ) {
-                FacilityInspection inspec = new FacilityInspection();
-                inspec.setInspection_type(useRS.getString("inspection_type"));
-                inspec.setInspection_detail(useRS.getString("inspection_detail"));
-                inspec.setFacility_ID(facility.getFacilityID());
-                listOfInspections.add(inspec);
+                FacilityInspection inspection = new FacilityInspectionImpl();
+                inspection.setInspection_type(useRS.getString("Inspection Type"));
+                inspection.setInspection_detail(useRS.getString("Inspection Details"));
+                inspection.setFacilityID(facility.getFacilityID());
+                listOfInspections.add(inspection);
             }
 
             //close to manage resources

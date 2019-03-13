@@ -1,7 +1,7 @@
 package com.fms.DAL;
 
 import com.fms.main.Facility;
-import com.fms.maintenance.Maintenance;
+import com.fms.maintenance.*;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class MaintenanceDAO {
 
         try {
 
-            Maintenance maint = new Maintenance();
+            Maintenance maint = new MaintenanceImpl();
             maint.setMaintenanceDetails(maintenanceDetails);
             maint.setCost(cost);
             maint.setFacilityID(facility.getFacilityID());
@@ -61,7 +61,7 @@ public class MaintenanceDAO {
         try {
             Statement st = DBHelper.getConnection().createStatement();
             String scheduleMaintenanceAddQuery = "INSERT INTO maintenance (facility_id, details, cost) VALUES (" +
-                    maintenanceRequest.getFacilityID() + ", '" + maintenanceRequest.getDetails() +
+                    maintenanceRequest.getFacilityID() + ", '" + maintenanceRequest.getMaintenanceDetails() +
                     "', " + maintenanceRequest.getCost() + ")";
             st.execute(scheduleMaintenanceAddQuery);
             System.out.println("MaintenanceDAO: ********** Query " + scheduleMaintenanceAddQuery + "\n");
@@ -79,7 +79,7 @@ public class MaintenanceDAO {
 
             Statement st = DBHelper.getConnection().createStatement();
             String scheduleMaintenanceRemoveQuery = "DELETE FROM maint_request WHERE facility_id = " +
-                    maintenanceRequest.getFacilityID() + " AND details = '" + maintenanceRequest.getDetails() +
+                    maintenanceRequest.getFacilityID() + " AND details = '" + maintenanceRequest.getMaintenanceDetails() +
                     "' AND cost = " + maintenanceRequest.getCost();
             st.execute(scheduleMaintenanceRemoveQuery);
             System.out.println("MaintenanceDAO: ********** Query " + scheduleMaintenanceRemoveQuery + "\n");
@@ -150,7 +150,7 @@ public class MaintenanceDAO {
             System.out.println("UseDAO: ********** Query " + listMaintRequestsQuery + "\n");
 
             while ( maintRS.next() ) {
-                Maintenance maintenanceRequest = new Maintenance();
+                Maintenance maintenanceRequest = new MaintenanceImpl();
                 maintenanceRequest.setMaintenanceDetails(maintRS.getString("maintenanceDetails"));
                 maintenanceRequest.setCost(maintRS.getInt("cost"));
                 maintenanceRequest.setFacilityID(facility.getFacilityID());
@@ -190,7 +190,7 @@ public class MaintenanceDAO {
             System.out.println("UseDAO: ********** Query " + listMaintenanceQuery + "\n");
 
             while ( maintRS.next() ) {
-                Maintenance maintenance = new Maintenance();
+                Maintenance maintenance = new MaintenanceImpl();
                 maintenance.setMaintenanceDetails(maintRS.getString("maintenanceDetails"));
                 maintenance.setCost(maintRS.getInt("cost"));
                 maintenance.setFacilityID(facility.getFacilityID());
