@@ -122,7 +122,7 @@ public class UsageService {
         try {
             FacilityService facilityService = new FacilityService();
             int totalRooms = facility.getFacilityDetail().getNumberOfRooms();
-            int roomsAvailable = facilityService.requestAvailableCapacity(facility);
+            int roomsAvailable = requestAvailableCapacity(facility);
             int roomsInUse = totalRooms - roomsAvailable;
             return Math.round(((double)roomsInUse / totalRooms) * 100d)/100d;
         } catch (Exception se) {
@@ -130,5 +130,32 @@ public class UsageService {
             System.err.println(se.getMessage());
         }
         return 0.00;
+    }
+
+    //generates list of available Facilities by rooms in use
+    public int requestAvailableCapacity(Facility facility) {
+
+        try {
+            List<FacilityUse> usage = usageDAO.listActualUsage(facility);
+            int roomsInUse = 0;
+            if (usage.size() > 0) {
+                for (FacilityUse facUse : usage) {
+                    //if Facility is currently in use,
+                    if ((LocalDate.now().equals(facUse.getStartDate()) || LocalDate.now().isAfter(facUse.getStartDate())) &
+                            LocalDate.now().equals(facUse.getEndDate()) || LocalDate.now().isBefore(facUse.getEndDate())) {
+                        if (facUse.getRoomNumber() == 0) {
+                            return 0;
+                        } else {
+                            roomsInUse = roomsInUse + 1;
+                        }
+                    }
+                }
+            }
+            return facility.getFacilityDetail().getNumberOfRooms() - roomsInUse;
+        } catch (Exception se) {
+            System.err.println("UseService: Threw an Exception requesting the available capacity of a facility.");
+            System.err.println(se.getMessage());
+        }
+        return 0;
     }
 }

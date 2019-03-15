@@ -108,7 +108,7 @@ public class FacilityClient {
 
         //requesting the available capacity of office4
         System.out.println("\nFacilityClient: Requesting Facility's Available Capacity...");
-        int roomsAvail = facilityService.requestAvailableCapacity(office4);
-        System.out.println("There are " + roomsAvail + " rooms currently available at Facility #" + office4.getFacilityID() + ".");
+        //int roomsAvail = UsageService.requestAvailableCapacity(office4);
+        //System.out.println("There are " + roomsAvail + " rooms currently available at Facility #" + office4.getFacilityID() + ".");
     }
 }
